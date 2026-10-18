@@ -1,0 +1,83 @@
+/* =========================================================
+   DESIGN TOKENS — Mirriam & Elias
+   Edit this file to retheme the entire site.
+   ========================================================= */
+
+:root {
+  /* --- Color Palette --- */
+  --color-brown:       #4A2C1A;   /* Chocolate Brown — headings, primary text */
+  --color-brown-mid:   #7A4A2E;   /* Mid brown — secondary accents */
+  --color-brown-light: #C4956A;   /* Warm brown — borders, dividers */
+  --color-beige:       #F5EFE6;   /* Beige — page background */
+  --color-beige-warm:  #EDE4D5;   /* Warm beige — subtle section backgrounds */
+  --color-champagne:   #D4AF7A;   /* Champagne — highlight accent */
+  --color-champagne-light: #EDD9AA; /* Light champagne — soft decorative use */
+  --color-ink:         #2C1A0E;   /* Near-black for body text */
+  --color-ink-light:   #6B4C38;   /* Muted text */
+  --color-white:       #FEFCF9;   /* Warm white */
+
+  /* --- Typography --- */
+  --font-serif:   'Cormorant Garamond', 'Georgia', serif;
+  --font-sans:    'Jost', 'Inter', sans-serif;
+
+  /* Type scale (fluid) */
+  --text-xs:    0.75rem;    /* 12px */
+  --text-sm:    0.875rem;   /* 14px */
+  --text-base:  1rem;       /* 16px */
+  --text-md:    1.125rem;   /* 18px */
+  --text-lg:    1.375rem;   /* 22px */
+  --text-xl:    1.75rem;    /* 28px */
+  --text-2xl:   2.25rem;    /* 36px */
+  --text-3xl:   3rem;       /* 48px */
+  --text-4xl:   4rem;       /* 64px */
+  --text-5xl:   5.5rem;     /* 88px */
+
+  /* Font weights */
+  --weight-light:   300;
+  --weight-regular: 400;
+  --weight-medium:  500;
+  --weight-semibold: 600;
+
+  /* Line heights */
+  --leading-tight:  1.15;
+  --leading-snug:   1.35;
+  --leading-normal: 1.6;
+  --leading-loose:  1.85;
+
+  /* Letter spacing */
+  --tracking-tight:  -0.02em;
+  --tracking-normal:  0em;
+  --tracking-wide:    0.06em;
+  --tracking-wider:   0.12em;
+
+  /* --- Spacing --- */
+  --space-1:   0.25rem;   /*  4px */
+  --space-2:   0.5rem;    /*  8px */
+  --space-3:   0.75rem;   /* 12px */
+  --space-4:   1rem;      /* 16px */
+  --space-5:   1.25rem;   /* 20px */
+  --space-6:   1.5rem;    /* 24px */
+  --space-8:   2rem;      /* 32px */
+  --space-10:  2.5rem;    /* 40px */
+  --space-12:  3rem;      /* 48px */
+  --space-16:  4rem;      /* 64px */
+  --space-20:  5rem;      /* 80px */
+  --space-24:  6rem;      /* 96px */
+  --space-32:  8rem;      /* 128px */
+
+  /* --- Layout --- */
+  --max-width-text:    640px;
+  --max-width-content: 900px;
+  --max-width-wide:    1100px;
+
+  /* --- Borders --- */
+  --border-thin:  1px solid var(--color-brown-light);
+  --border-mid:   1px solid var(--color-champagne);
+
+  /* --- Transitions --- */
+  --transition-base: 200ms ease;
+  --transition-slow: 400ms ease;
+
+  /* --- Navbar height (used for scroll offset) --- */
+  --navbar-height: 64px;
+}

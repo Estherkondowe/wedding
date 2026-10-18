@@ -1,0 +1,203 @@
+/* =========================================================
+   RSVP PAGE
+   ========================================================= */
+
+.rsvp-page__header {
+  text-align: center;
+  padding-bottom: var(--space-8);
+}
+
+/* --- Contacts --- */
+.rsvp-contacts__label {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-champagne);
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.rsvp-contacts {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-12);
+  flex-wrap: wrap;
+}
+
+.rsvp-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.rsvp-contact__role {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-light);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-ink-light);
+}
+
+.rsvp-contact__number {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-light);
+  color: var(--color-brown);
+  letter-spacing: 0.04em;
+  transition: color var(--transition-base);
+}
+
+.rsvp-contact__number:hover {
+  color: var(--color-champagne);
+}
+
+.rsvp-contact__sep {
+  display: block;
+  width: 1px;
+  height: 48px;
+  background-color: var(--color-brown-light);
+  opacity: 0.5;
+}
+
+/* --- Form --- */
+.rsvp-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.form-field__label {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-brown);
+}
+
+.form-field__optional {
+  font-weight: var(--weight-light);
+  color: var(--color-ink-light);
+}
+
+.form-field__input {
+  width: 100%;
+  padding: var(--space-4) var(--space-4);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-brown-light);
+  border-radius: 0;
+  color: var(--color-ink);
+  font-size: var(--text-base);
+  font-weight: var(--weight-light);
+  transition: border-color var(--transition-base);
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.form-field__input:focus {
+  outline: none;
+  border-color: var(--color-champagne);
+}
+
+.form-field--error .form-field__input {
+  border-color: #c0392b;
+}
+
+.form-field__select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234A2C1A' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-4) center;
+  padding-right: var(--space-10);
+  cursor: pointer;
+}
+
+.form-field__textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: var(--leading-normal);
+}
+
+.form-field__hint {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: var(--color-ink-light);
+  text-align: right;
+}
+
+.form-field__error {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: #c0392b;
+  font-weight: var(--weight-light);
+}
+
+.form-error--api {
+  padding: var(--space-3) var(--space-4);
+  border-left: 2px solid #c0392b;
+  background-color: #fdf2f2;
+}
+
+.rsvp-form__submit {
+  width: 100%;
+  padding: var(--space-4);
+  font-size: var(--text-base);
+}
+
+.rsvp-form__submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* --- Success state --- */
+.rsvp-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-16) 0;
+  gap: var(--space-5);
+}
+
+.rsvp-success__icon {
+  font-size: 2rem;
+  color: var(--color-champagne);
+  line-height: 1;
+}
+
+.rsvp-success__title {
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-light);
+  color: var(--color-brown);
+}
+
+.rsvp-success__body {
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  font-weight: var(--weight-light);
+  line-height: var(--leading-loose);
+  color: var(--color-ink-light);
+  max-width: 42ch;
+}
+
+/* --- Responsive --- */
+@media (max-width: 480px) {
+  .rsvp-contact__sep {
+    width: 40px;
+    height: 1px;
+  }
+
+  .rsvp-contacts {
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+}

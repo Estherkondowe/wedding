@@ -1,0 +1,39 @@
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
+.divider {
+  margin: var(--space-12) auto;
+}
+
+.divider--line {
+  border: none;
+  border-top: var(--border-thin);
+  width: 100%;
+  max-width: 200px;
+}
+
+.divider--ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 240px;
+}
+
+.divider__line {
+  display: block;
+  flex: 1;
+  height: 1px;
+  background-color: var(--color-brown-light);
+}
+
+.divider__diamond {
+  display: block;
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-champagne);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}

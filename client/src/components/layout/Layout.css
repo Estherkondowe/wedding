@@ -1,0 +1,14 @@
+/* =========================================================
+   LAYOUT
+   ========================================================= */
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.layout__main {
+  flex: 1;
+  padding-top: var(--navbar-height); /* Offset for fixed navbar */
+}
