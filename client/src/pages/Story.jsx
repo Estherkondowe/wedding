@@ -42,7 +42,7 @@ export default function Story() {
               </p>
 
               <p>
-                That is where she and Elias first crossed paths. Something quiet
+                That is where she and Elia first crossed paths. Something quiet
                 took root in those early conversations — a recognition, perhaps,
                 that the other person was worth paying attention to.
               </p>
@@ -63,7 +63,8 @@ export default function Story() {
             {/* Portrait image */}
             <div className="story__portrait">
               <ImagePlaceholder
-                label="Mirriam & Elias"
+                label="Mirriam & Elia"
+                src="/photos/em.jpg"
                 aspectRatio="3 / 4"
               />
             </div>
@@ -79,9 +80,9 @@ export default function Story() {
         <div className="container--content">
           <p className="story__gallery-label">A few moments together</p>
           <div className="story__photos">
-            <ImagePlaceholder label="Together · 2024" aspectRatio="4 / 3" />
-            <ImagePlaceholder label="Engagement · 2025" aspectRatio="4 / 3" />
-            <ImagePlaceholder label="Our world · 2025" aspectRatio="4 / 3" />
+            <ImagePlaceholder label="Together"  src="/photos/em.jpg" aspectRatio="3/4" />
+            <ImagePlaceholder label="Engagement"  src="/photos/mimi.jpg" aspectRatio="4/3" />
+            <ImagePlaceholder label="Our world" src="/photos/mme.png" aspectRatio="3 / 4" />
           </div>
         </div>
       </section>

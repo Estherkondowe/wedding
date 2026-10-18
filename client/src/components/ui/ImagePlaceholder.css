@@ -1,6 +1,10 @@
+
 /* =========================================================
    IMAGE PLACEHOLDER
    ========================================================= */
+
+
+
 
 .img-placeholder {
   width: 100%;
@@ -13,9 +17,13 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
-  transition: transform 600ms ease;
 }
+.img-placeholder__img:hover {
+  transform: scale(1.02);
+}
+
 
 .img-placeholder__img:hover {
   transform: scale(1.02);

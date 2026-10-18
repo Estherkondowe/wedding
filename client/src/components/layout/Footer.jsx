@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="footer" role="contentinfo">
       <div className="footer__inner">
 
-        <p className="footer__names">Mirriam &amp; Elias</p>
+        <p className="footer__names">Mirriam &amp; Elia</p>
 
         <span className="footer__divider" aria-hidden="true" />
 

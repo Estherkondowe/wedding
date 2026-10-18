@@ -28,7 +28,7 @@ export default function Home() {
           <h1 className="hero__names">
             <span>Mirriam</span>
             <span className="hero__ampersand">&amp;</span>
-            <span>Elias</span>
+            <span>Elia</span>
           </h1>
 
           <div className="hero__date-line" aria-label="Wedding date">
