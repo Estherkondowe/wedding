@@ -1,0 +1,33 @@
+/* =========================================================
+   NOT FOUND (404)
+   ========================================================= */
+
+.not-found {
+  padding-block: var(--space-32);
+}
+
+.not-found__label {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-champagne-ink);
+  margin-bottom: var(--space-3);
+}
+
+.not-found__title {
+  font-family: var(--font-serif);
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-light);
+  color: var(--color-brown);
+  line-height: var(--leading-tight);
+  margin-bottom: var(--space-4);
+}
+
+.not-found__body {
+  font-family: var(--font-sans);
+  font-weight: var(--weight-light);
+  color: var(--color-ink-light);
+  margin-bottom: var(--space-8);
+}

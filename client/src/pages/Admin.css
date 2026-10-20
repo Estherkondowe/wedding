@@ -1,0 +1,111 @@
+/* =========================================================
+   ADMIN (private RSVP dashboard)
+   ========================================================= */
+
+.admin__unlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.admin__unlock .btn {
+  margin-top: var(--space-2);
+}
+
+.admin__bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-8);
+}
+
+.admin__summary {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-light);
+  color: var(--color-brown);
+}
+
+.admin__actions {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.admin__actions .btn {
+  min-height: 44px;
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-xs);
+}
+
+.admin__error {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--color-error);
+  margin-bottom: var(--space-4);
+}
+
+.admin__table-wrap {
+  overflow-x: auto;
+  border: var(--border-thin);
+}
+
+.admin__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-light);
+}
+
+.admin__table th {
+  text-align: left;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-champagne-ink);
+  padding: var(--space-4);
+  border-bottom: var(--border-thin);
+  background-color: var(--color-beige-warm);
+  white-space: nowrap;
+}
+
+.admin__table td {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-beige-warm);
+  color: var(--color-ink);
+  vertical-align: top;
+}
+
+.admin__message {
+  max-width: 320px;
+  white-space: pre-wrap;
+}
+
+.admin__table td.admin__empty {
+  text-align: center;
+  color: var(--color-ink-light);
+  padding: var(--space-10);
+}
+
+.admin__pill {
+  display: inline-block;
+  padding: 2px var(--space-3);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  border: 1px solid currentColor;
+  white-space: nowrap;
+}
+
+.admin__pill--yes {
+  color: var(--color-brown);
+}
+
+.admin__pill--no {
+  color: var(--color-ink-light);
+}

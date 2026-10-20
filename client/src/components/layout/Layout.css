@@ -12,3 +12,7 @@
   flex: 1;
   padding-top: var(--navbar-height); /* Offset for fixed navbar */
 }
+
+.layout__main:focus {
+  outline: none;
+}

@@ -1,110 +1,151 @@
 import SectionHeading from '../components/ui/SectionHeading';
 import Divider from '../components/ui/Divider';
+import MapEmbed from '../components/ui/MapEmbed';
+import usePageTitle from '../hooks/usePageTitle';
+import {
+  CEREMONY, RECEPTION, SCHEDULE, PALETTE, DATE_LINE,
+  CEREMONY_START, CEREMONY_END, RECEPTION_START, RECEPTION_END,
+} from '../data/wedding';
 import './WeddingDetails.css';
 
-function EventCard({ type, venue, time, address, mapSrc }) {
+function EventCard({ event }) {
   return (
     <article className="event-card">
-      <p className="event-card__type">{type}</p>
-      <h2 className="event-card__venue">{venue}</h2>
+      <p className="event-card__type">{event.type}</p>
+      <h2 className="event-card__venue">{event.venue}</h2>
       <div className="event-card__meta">
         <div className="event-card__meta-item">
           <span className="event-card__meta-label">Date</span>
-          <span className="event-card__meta-value">Saturday, 7 November 2026</span>
+          <span className="event-card__meta-value">{DATE_LINE}</span>
         </div>
         <div className="event-card__meta-item">
           <span className="event-card__meta-label">Time</span>
-          <span className="event-card__meta-value">{time}</span>
+          <span className="event-card__meta-value">{event.time}</span>
         </div>
         <div className="event-card__meta-item">
           <span className="event-card__meta-label">Address</span>
-          <span className="event-card__meta-value">{address}</span>
+          <span className="event-card__meta-value">{event.address}</span>
         </div>
       </div>
 
-      {/* Map embed or elegant placeholder */}
-      <div className="event-card__map">
-        {mapSrc ? (
-          <iframe
-            src={mapSrc}
-            title={`Map to ${venue}`}
-            loading="lazy"
-            allowFullScreen
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-        ) : (
-          <div className="event-card__map-placeholder" aria-label={`Location: ${address}`}>
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/>
-              <circle cx="12" cy="10" r="3"/>
-            </svg>
-            <p>{address}</p>
-            <p className="event-card__map-hint">Lilongwe, Malawi</p>
-          </div>
-        )}
-      </div>
+      <MapEmbed embedSrc={event.mapsEmbed} mapsUrl={event.mapsUrl} venue={event.venue} />
     </article>
   );
 }
 
-function PaletteChip({ name, hex, role }) {
+function ScheduleTimeline() {
   return (
-    <div className="palette__chip">
-      <span className="palette__swatch" style={{ backgroundColor: hex }} aria-hidden="true" />
-      <span className="palette__name">{name}</span>
-      <span className="palette__role">{role}</span>
-    </div>
+    <ol className="timeline" data-reveal>
+      {SCHEDULE.map(({ time, title, detail }) => (
+        <li key={time} className="timeline__item">
+          <span className="timeline__marker" aria-hidden="true" />
+          <div className="timeline__time">{time}</div>
+          <div className="timeline__body">
+            <p className="timeline__title">{title}</p>
+            <p className="timeline__detail">{detail}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
   );
 }
 
+function toIcsDate(iso) {
+  /* Convert to UTC: 2026-11-07T06:00:00.000Z -> 20261107T060000Z */
+  return new Date(iso).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+}
+
+function downloadIcs() {
+  const lines = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Mirriam and Elia//Wedding//EN',
+    'CALSCALE:GREGORIAN',
+    'BEGIN:VEVENT',
+    'UID:ceremony-20261107@mirriamandelia',
+    `DTSTART:${toIcsDate(CEREMONY_START)}`,
+    `DTEND:${toIcsDate(CEREMONY_END)}`,
+    `SUMMARY:Wedding Ceremony — ${CEREMONY.venue}`,
+    `LOCATION:${CEREMONY.venue}\\, ${CEREMONY.address}`,
+    'END:VEVENT',
+    'BEGIN:VEVENT',
+    'UID:reception-20261107@mirriamandelia',
+    `DTSTART:${toIcsDate(RECEPTION_START)}`,
+    `DTEND:${toIcsDate(RECEPTION_END)}`,
+    `SUMMARY:Wedding Reception — ${RECEPTION.venue}`,
+    `LOCATION:${RECEPTION.venue}\\, ${RECEPTION.address}`,
+    'END:VEVENT',
+    'END:VCALENDAR',
+  ];
+  const blob = new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'mirriam-and-elia-wedding.ics';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
 export default function WeddingDetails() {
+  usePageTitle('The Day');
+
   return (
     <div className="details">
 
       <section className="section details__header">
         <div className="container--content">
           <SectionHeading
+            as="h1"
             label="7 November 2026"
             title="The Day"
             subtitle="Two celebrations. One day. A lifetime together."
           />
+          <div className="details__header-actions">
+            <button type="button" className="btn btn--ghost" onClick={downloadIcs}>
+              Add to calendar
+            </button>
+          </div>
         </div>
       </section>
 
       {/* ── Events ───────────────────────────── */}
       <section className="section section--alt details__events">
         <div className="container--content">
-          <div className="details__events-grid">
-            <EventCard
-              type="Ceremony"
-              venue="Bride Tabernacle"
-              time="8:00 AM"
-              address="Mchesi, Lilongwe"
-              mapSrc="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3871.536511758266!2d33.7903485!3d-13.986171500000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1921d3002ac1cc47%3A0x1bef9ef53e26c3d7!2sBride%20Assembly%20Tabernacle%20~%20Mchesi%20~!5e0!3m2!1sen!2smw!4v1792361063491!5m2!1sen!2smw" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"
-            />
+          <div className="details__events-grid" data-reveal>
+            <EventCard event={CEREMONY} />
             <div className="details__events-sep" aria-hidden="true">
               <span />
               <span className="details__events-dot" />
               <span />
             </div>
-            <EventCard
-              type="Reception"
-              venue="Logos Ministries Gardens"
-              time="1:00 PM"
-              address="Lilongwe, Malawi"
-              mapSrc="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d967.8541390166216!2d33.78255712847425!3d-13.993297197841523!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1921d3feb5636fbd%3A0x6e9ea65be49ee768!2sLogos%20Ministries!5e0!3m2!1sen!2smw!4v1792361404883!5m2!1sen!2smw" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"
-            />
+            <EventCard event={RECEPTION} />
           </div>
         </div>
       </section>
 
       <Divider />
 
+      {/* ── Schedule ─────────────────────────── */}
+      <section className="section details__schedule">
+        <div className="container--content">
+          <SectionHeading
+            label="Order of the Day"
+            title="The Schedule"
+            subtitle="From the first amen to the last dance."
+          />
+          <ScheduleTimeline />
+        </div>
+      </section>
+
+      <Divider variant="line" />
+
       {/* ── What to expect ───────────────────── */}
       <section className="section details__notes">
-        <div className="container--text" style={{ textAlign: 'center' }}>
+        <div className="container--text text-center">
           <SectionHeading label="Good to Know" title="A few things" />
-          <div className="details__notes-grid">
+          <div className="details__notes-grid" data-reveal>
             <div className="details__note">
               <p className="details__note-title">Parking</p>
               <p className="details__note-body">Ample parking is available at both venues. Please arrive a few minutes early for the ceremony.</p>
@@ -125,12 +166,16 @@ export default function WeddingDetails() {
 
       {/* ── Color palette ─────────────────────── */}
       <section className="section details__palette">
-        <div className="container--content" style={{ textAlign: 'center' }}>
+        <div className="container--content text-center">
           <SectionHeading label="Wedding Colors" title="The Palette" />
-          <div className="palette">
-            <PaletteChip name="Chocolate Brown" hex="#4A2C1A" role="Primary" />
-            <PaletteChip name="Beige"           hex="#F5EFE6" role="Background" />
-            <PaletteChip name="Champagne"       hex="#D4AF7A" role="Accent" />
+          <div className="palette" data-reveal>
+            {PALETTE.map(({ name, hex, role }) => (
+              <div key={hex} className="palette__chip">
+                <span className="palette__swatch" style={{ backgroundColor: hex }} aria-hidden="true" />
+                <span className="palette__name">{name}</span>
+                <span className="palette__role">{role}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>

@@ -1,0 +1,55 @@
+/* =========================================================
+   MAP EMBED (click-to-load facade)
+   ========================================================= */
+
+.map-embed {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: var(--border-thin);
+  background-color: var(--color-beige-warm);
+}
+
+.map-embed iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.map-embed__facade {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  text-align: center;
+}
+
+.map-embed__pin {
+  color: var(--color-champagne-ink);
+}
+
+.map-embed__venue {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-light);
+  color: var(--color-brown);
+}
+
+.map-embed__actions {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: var(--space-2);
+}
+
+.map-embed__btn {
+  min-height: 44px;
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-xs);
+}

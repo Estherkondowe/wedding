@@ -1,8 +1,8 @@
 /* =========================================================
-   GLOBAL STYLES — Mirriam & Elias
+   GLOBAL STYLES — Mirriam & Elia
+   Fonts are loaded via <link> in index.html (no render-blocking @import).
    ========================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap');
 @import './tokens.css';
 
 /* --- Reset --- */
@@ -56,7 +56,7 @@ ul, ol {
   list-style: none;
 }
 
-/* --- Utility: screen-reader only --- */
+/* --- Utility: screen-reader only (visible on keyboard focus) --- */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -69,9 +69,30 @@ ul, ol {
   border: 0;
 }
 
+.sr-only:focus,
+.sr-only:focus-visible {
+  position: fixed;
+  top: var(--space-3);
+  left: var(--space-3);
+  z-index: 1000;
+  width: auto;
+  height: auto;
+  padding: var(--space-3) var(--space-5);
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  background-color: var(--color-brown);
+  color: var(--color-champagne-light);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
 /* --- Focus styles (keyboard accessibility) --- */
 :focus-visible {
-  outline: 2px solid var(--color-champagne);
+  outline: var(--focus-ring);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -111,6 +132,71 @@ ul, ol {
   color: var(--color-ink-light);
 }
 
+.text-center {
+  text-align: center;
+}
+
+/* --- Buttons (global — used across pages) --- */
+.btn {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  padding: var(--space-4) var(--space-8);
+  min-height: 48px;
+  line-height: 1.2;
+  transition: background-color var(--transition-base), color var(--transition-base),
+              border-color var(--transition-base), transform var(--transition-base);
+  cursor: pointer;
+  text-align: center;
+}
+
+.btn--primary {
+  background-color: var(--color-brown);
+  color: var(--color-champagne-light);
+  border: 1px solid var(--color-brown);
+}
+
+.btn--primary:hover {
+  background-color: var(--color-brown-mid);
+  border-color: var(--color-brown-mid);
+}
+
+.btn--ghost {
+  background-color: transparent;
+  color: var(--color-brown);
+  border: 1px solid var(--color-brown-light);
+}
+
+.btn--ghost:hover {
+  border-color: var(--color-brown);
+}
+
+.btn--ghost-light {
+  background-color: transparent;
+  color: var(--color-white);
+  border: 1px solid rgba(254, 252, 249, 0.6);
+}
+
+.btn--ghost-light:hover {
+  border-color: var(--color-white);
+  background-color: rgba(254, 252, 249, 0.08);
+}
+
+/* --- Scroll reveal (guarded by prefers-reduced-motion) --- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--transition-reveal), transform var(--transition-reveal);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
 /* --- Reduced motion --- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -121,6 +207,11 @@ ul, ol {
 
   html {
     scroll-behavior: auto;
+  }
+
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
   }
 }
 

@@ -1,20 +1,43 @@
 import express from 'express';
 import cors    from 'cors';
+import helmet  from 'helmet';
+import { rateLimit } from 'express-rate-limit';
 import rsvpRoutes  from './routes/rsvpRoutes.js';
 import errorHandler from './middleware/errorHandler.js';
 
 const app = express();
 
 /* --- Middleware --- */
+app.use(helmet());
+
 app.use(cors({
   origin: process.env.CLIENT_ORIGIN || 'http://localhost:3000',
   methods: ['GET', 'POST'],
 }));
 
-app.use(express.json());
+app.use(express.json({ limit: '16kb' }));
+
+/* --- Rate limiting --- */
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 300,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  message: { success: false, error: 'Too many requests. Please try again later.' },
+});
+
+const rsvpLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 5,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  message: { success: false, error: 'Too many RSVP submissions. Please try again in a few minutes.' },
+});
+
+app.use('/api', apiLimiter);
 
 /* --- Routes --- */
-app.use('/api/rsvp', rsvpRoutes);
+app.use('/api/rsvp', rsvpLimiter, rsvpRoutes);
 
 /* --- Health check --- */
 app.get('/api/health', (_req, res) => {

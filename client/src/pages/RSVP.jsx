@@ -1,33 +1,42 @@
 import SectionHeading from '../components/ui/SectionHeading';
 import useRSVP from '../hooks/useRSVP';
+import usePageTitle from '../hooks/usePageTitle';
+import { CONTACTS, RSVP_DEADLINE, COUPLE } from '../data/wedding';
 import './RSVP.css';
 
-function RSVPSuccess({ name }) {
+function RSVPSuccess({ name, attending }) {
   return (
     <div className="rsvp-success">
       <span className="rsvp-success__icon" aria-hidden="true">✦</span>
       <h2 className="rsvp-success__title">Thank you, {name}.</h2>
       <p className="rsvp-success__body">
-        Your RSVP has been received. We cannot wait to celebrate with you on
-        the 7th of November.
+        {attending
+          ? `Your RSVP has been received. We cannot wait to celebrate with you on the 7th of November.`
+          : `We will miss you on the day — thank you for letting us know.`}
       </p>
     </div>
   );
 }
 
+function waLink(phoneRaw, text) {
+  return `https://wa.me/${phoneRaw.replace(/\D/g, '')}?text=${encodeURIComponent(text)}`;
+}
+
 export default function RSVP() {
-  const { fields, errors, status, apiError, handleChange, handleSubmit } = useRSVP();
+  usePageTitle('RSVP');
+  const { fields, errors, status, apiError, attending, handleChange, handleSubmit } = useRSVP();
 
   return (
     <div className="rsvp-page">
 
       {/* ── Header ───────────────────────────── */}
       <section className="section rsvp-page__header">
-        <div className="container--text" style={{ textAlign: 'center' }}>
+        <div className="container--text text-center">
           <SectionHeading
+            as="h1"
             label="Kindly Reply"
             title="Will you join us?"
-            subtitle="Please let us know by 31 October 2026 so we can make sure everything is just right."
+            subtitle={`Please let us know by ${RSVP_DEADLINE} so we can make sure everything is just right.`}
           />
         </div>
       </section>
@@ -37,15 +46,25 @@ export default function RSVP() {
         <div className="container--content">
           <p className="rsvp-contacts__label">You may also reach us directly</p>
           <div className="rsvp-contacts">
-            <div className="rsvp-contact">
-              <span className="rsvp-contact__role">Mr Chirwa</span>
-              <a href="tel:+265995979684" className="rsvp-contact__number">0995 979 684</a>
-            </div>
-            <span className="rsvp-contact__sep" aria-hidden="true" />
-            <div className="rsvp-contact">
-              <span className="rsvp-contact__role">Mr Kondowe</span>
-              <a href="tel:+265999914961" className="rsvp-contact__number">0999 914 961</a>
-            </div>
+            {CONTACTS.map(({ role, phoneDisplay, phoneRaw }, i) => (
+              <div key={phoneRaw} className="rsvp-contacts__group">
+                {i > 0 && <span className="rsvp-contact__sep" aria-hidden="true" />}
+                <div className="rsvp-contact">
+                  <span className="rsvp-contact__role">{role}</span>
+                  <span className="rsvp-contact__methods">
+                    <a href={`tel:${phoneRaw}`} className="rsvp-contact__number">{phoneDisplay}</a>
+                    <a
+                      href={waLink(phoneRaw, `Hello ${role}, regarding Mirriam & Elia's wedding on 7 November 2026…`)}
+                      className="rsvp-contact__wa"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      WhatsApp
+                    </a>
+                  </span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -55,7 +74,7 @@ export default function RSVP() {
         <div className="container--text">
 
           {status === 'success' ? (
-            <RSVPSuccess name={fields.full_name} />
+            <RSVPSuccess name={fields.full_name} attending={attending} />
           ) : (
             <form
               className="rsvp-form"
@@ -78,6 +97,7 @@ export default function RSVP() {
                   onChange={handleChange}
                   autoComplete="name"
                   aria-required="true"
+                  aria-invalid={errors.full_name ? 'true' : undefined}
                   aria-describedby={errors.full_name ? 'full_name-error' : undefined}
                   placeholder="Your full name"
                 />
@@ -88,25 +108,87 @@ export default function RSVP() {
                 )}
               </div>
 
-              {/* Guest Count */}
-              <div className={`form-field${errors.guest_count ? ' form-field--error' : ''}`}>
-                <label className="form-field__label" htmlFor="guest_count">
-                  Number of Guests <span aria-hidden="true">*</span>
+              {/* Attending */}
+              <fieldset className={`form-field${errors.attending ? ' form-field--error' : ''}`}>
+                <legend className="form-field__label">
+                  Will you be with us? <span aria-hidden="true">*</span>
+                </legend>
+                <div className="form-field__radios">
+                  <label className={`radio-chip${fields.attending === 'yes' ? ' radio-chip--selected' : ''}`}>
+                    <input
+                      type="radio"
+                      name="attending"
+                      value="yes"
+                      checked={fields.attending === 'yes'}
+                      onChange={handleChange}
+                      className="radio-chip__input"
+                    />
+                    <span>Joyfully accepts</span>
+                  </label>
+                  <label className={`radio-chip${fields.attending === 'no' ? ' radio-chip--selected' : ''}`}>
+                    <input
+                      type="radio"
+                      name="attending"
+                      value="no"
+                      checked={fields.attending === 'no'}
+                      onChange={handleChange}
+                      className="radio-chip__input"
+                    />
+                    <span>Regretfully declines</span>
+                  </label>
+                </div>
+                {errors.attending && (
+                  <p id="attending-error" className="form-field__error" role="alert">{errors.attending}</p>
+                )}
+              </fieldset>
+
+              {/* Guest Count — only when attending */}
+              {attending && (
+                <div className={`form-field${errors.guest_count ? ' form-field--error' : ''}`}>
+                  <label className="form-field__label" htmlFor="guest_count">
+                    Number of Guests <span aria-hidden="true">*</span>
+                  </label>
+                  <select
+                    id="guest_count"
+                    name="guest_count"
+                    className="form-field__input form-field__select"
+                    value={fields.guest_count}
+                    onChange={handleChange}
+                    aria-required="true"
+                    aria-invalid={errors.guest_count ? 'true' : undefined}
+                    aria-describedby={errors.guest_count ? 'guest_count-error' : undefined}
+                  >
+                    {Array.from({ length: 10 }, (_, i) => i + 1).map(n => (
+                      <option key={n} value={n}>{n} {n === 1 ? 'guest' : 'guests'}</option>
+                    ))}
+                  </select>
+                  {errors.guest_count && (
+                    <p id="guest_count-error" className="form-field__error" role="alert">{errors.guest_count}</p>
+                  )}
+                </div>
+              )}
+
+              {/* Email */}
+              <div className={`form-field${errors.email ? ' form-field--error' : ''}`}>
+                <label className="form-field__label" htmlFor="email">
+                  Email
+                  <span className="form-field__optional"> — optional</span>
                 </label>
-                <select
-                  id="guest_count"
-                  name="guest_count"
-                  className="form-field__input form-field__select"
-                  value={fields.guest_count}
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  className="form-field__input"
+                  value={fields.email}
                   onChange={handleChange}
-                  aria-required="true"
-                >
-                  {Array.from({ length: 10 }, (_, i) => i + 1).map(n => (
-                    <option key={n} value={n}>{n} {n === 1 ? 'guest' : 'guests'}</option>
-                  ))}
-                </select>
-                {errors.guest_count && (
-                  <p className="form-field__error" role="alert">{errors.guest_count}</p>
+                  autoComplete="email"
+                  aria-invalid={errors.email ? 'true' : undefined}
+                  aria-describedby={errors.email ? 'email-error' : 'email-hint'}
+                  placeholder="you@example.com"
+                />
+                <p id="email-hint" className="form-field__hint">Only used to confirm your RSVP.</p>
+                {errors.email && (
+                  <p id="email-error" className="form-field__error" role="alert">{errors.email}</p>
                 )}
               </div>
 
@@ -125,7 +207,7 @@ export default function RSVP() {
                   rows={4}
                   maxLength={500}
                   aria-describedby={errors.message ? 'message-error' : 'message-hint'}
-                  placeholder="Share a wish or a prayer for Mirriam and Elias…"
+                  placeholder={`Share a wish or a prayer for ${COUPLE.fullNames}…`}
                 />
                 <p id="message-hint" className="form-field__hint">
                   {fields.message.length}/500
@@ -135,6 +217,20 @@ export default function RSVP() {
                     {errors.message}
                   </p>
                 )}
+              </div>
+
+              {/* Honeypot — hidden from humans, tempting to bots */}
+              <div className="form-field form-field--hp" aria-hidden="true">
+                <label htmlFor="website">Website</label>
+                <input
+                  id="website"
+                  name="website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={fields.website}
+                  onChange={handleChange}
+                />
               </div>
 
               {/* API error */}

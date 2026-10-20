@@ -1,9 +1,13 @@
 import SectionHeading from '../components/ui/SectionHeading';
-import ImagePlaceholder from '../components/ui/ImagePlaceholder';
+import Photo from '../components/ui/Photo';
 import Divider from '../components/ui/Divider';
+import usePageTitle from '../hooks/usePageTitle';
+import { COUPLE, PHOTOS } from '../data/wedding';
 import './Story.css';
 
 export default function Story() {
+  usePageTitle('Our Story');
+
   return (
     <div className="story">
 
@@ -11,6 +15,7 @@ export default function Story() {
       <section className="section story__header">
         <div className="container--content">
           <SectionHeading
+            as="h1"
             label="Our Story"
             title="How it all began"
           />
@@ -20,7 +25,7 @@ export default function Story() {
       {/* ── Main story ───────────────────────── */}
       <section className="section section--alt story__main">
         <div className="container--content">
-          <div className="story__layout">
+          <div className="story__layout" data-reveal>
 
             {/* Text column */}
             <div className="story__text">
@@ -62,9 +67,9 @@ export default function Story() {
 
             {/* Portrait image */}
             <div className="story__portrait">
-              <ImagePlaceholder
-                label="Mirriam & Elia"
-                src="/photos/em.jpg"
+              <Photo
+                src={PHOTOS.portrait}
+                alt={`${COUPLE.fullNames} in a quiet moment together`}
                 aspectRatio="3 / 4"
               />
             </div>
@@ -75,14 +80,21 @@ export default function Story() {
 
       <Divider />
 
-      {/* ── Photo grid ───────────────────────── */}
+      {/* ── Photo moments ───────────────────── */}
       <section className="section story__gallery">
-        <div className="container--content">
+        <div className="container--content" data-reveal>
           <p className="story__gallery-label">A few moments together</p>
           <div className="story__photos">
-            <ImagePlaceholder label="Together"  src="/photos/em.jpg" aspectRatio="3/4" />
-            <ImagePlaceholder label="Engagement"  src="/photos/mimi.jpg" aspectRatio="4/3" />
-            <ImagePlaceholder label="Our world" src="/photos/mme.png" aspectRatio="3 / 4" />
+            <Photo
+              src={PHOTOS.engagement}
+              alt="The couple during their engagement"
+              aspectRatio="4 / 3"
+            />
+            <Photo
+              src={PHOTOS.couple}
+              alt="Mirriam and Elia smiling together"
+              aspectRatio="3 / 4"
+            />
           </div>
         </div>
       </section>

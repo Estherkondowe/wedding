@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import useCountdown from '../hooks/useCountdown';
+import usePageTitle from '../hooks/usePageTitle';
+import { COUPLE, CEREMONY_START, DATE_LINE, DATE_ISO, CEREMONY, RECEPTION, DRESS_CODE, PHOTOS } from '../data/wedding';
 import './Home.css';
-
-const WEDDING_DATE = '2026-11-07T08:00:00';
 
 function CountdownUnit({ value, label }) {
   return (
@@ -14,41 +14,55 @@ function CountdownUnit({ value, label }) {
 }
 
 export default function Home() {
-  const { days, hours, minutes, seconds } = useCountdown(WEDDING_DATE);
+  usePageTitle('');
+  const { days, hours, minutes, seconds, isDone } = useCountdown(CEREMONY_START);
 
   return (
     <div className="home">
 
       {/* ── Hero ─────────────────────────────── */}
-      <section className="hero" aria-label="Hero">
+      <section className="hero">
+        <img
+          className="hero__bg"
+          src={PHOTOS.hero}
+          alt={`${COUPLE.fullNames} together`}
+          fetchPriority="high"
+          decoding="async"
+        />
+        <div className="hero__scrim" aria-hidden="true" />
+
         <div className="hero__inner">
 
           <p className="hero__eyebrow">We are getting married</p>
 
           <h1 className="hero__names">
-            <span>Mirriam</span>
+            <span>{COUPLE.nameA}</span>
             <span className="hero__ampersand">&amp;</span>
-            <span>Elia</span>
+            <span>{COUPLE.nameB}</span>
           </h1>
 
-          <div className="hero__date-line" aria-label="Wedding date">
+          <div className="hero__date-line">
             <span className="hero__date-rule" aria-hidden="true" />
-            <time className="hero__date" dateTime="2026-11-07">
-              Saturday, 7 November 2026
+            <time className="hero__date" dateTime={DATE_ISO}>
+              {DATE_LINE}
             </time>
             <span className="hero__date-rule" aria-hidden="true" />
           </div>
 
           {/* Countdown */}
-          <div className="countdown" role="timer" aria-label="Countdown to wedding">
-            <CountdownUnit value={days}    label="Days"    />
-            <span className="countdown__sep" aria-hidden="true">·</span>
-            <CountdownUnit value={hours}   label="Hours"   />
-            <span className="countdown__sep" aria-hidden="true">·</span>
-            <CountdownUnit value={minutes} label="Minutes" />
-            <span className="countdown__sep" aria-hidden="true">·</span>
-            <CountdownUnit value={seconds} label="Seconds" />
-          </div>
+          {isDone ? (
+            <p className="hero__today">The day is here — we marry today.</p>
+          ) : (
+            <div className="countdown" role="timer" aria-label="Countdown to the wedding">
+              <CountdownUnit value={days}    label="Days"    />
+              <span className="countdown__sep" aria-hidden="true">·</span>
+              <CountdownUnit value={hours}   label="Hours"   />
+              <span className="countdown__sep" aria-hidden="true">·</span>
+              <CountdownUnit value={minutes} label="Minutes" />
+              <span className="countdown__sep" aria-hidden="true">·</span>
+              <CountdownUnit value={seconds} label="Seconds" />
+            </div>
+          )}
 
           <p className="hero__welcome">
             With grateful hearts and joyful spirits, we invite you to
@@ -57,33 +71,29 @@ export default function Home() {
 
           <div className="hero__actions">
             <Link to="/rsvp" className="btn btn--primary">Kindly RSVP</Link>
-            <Link to="/details" className="btn btn--ghost">View Details</Link>
+            <Link to="/details" className="btn btn--ghost-light">View Details</Link>
           </div>
 
         </div>
-
-        {/* Decorative vertical rules */}
-        <span className="hero__rule hero__rule--left"  aria-hidden="true" />
-        <span className="hero__rule hero__rule--right" aria-hidden="true" />
       </section>
 
       {/* ── At a glance ─────────────────────── */}
-      <section className="glance section" aria-label="Event overview">
+      <section className="glance section" aria-label="Event overview" data-reveal>
         <div className="container">
           <div className="glance__grid">
 
             <div className="glance__item">
               <p className="glance__label">Ceremony</p>
-              <p className="glance__venue">Bride Tabernacle</p>
-              <p className="glance__detail">Mchesi · 8:00 AM</p>
+              <p className="glance__venue">{CEREMONY.venue}</p>
+              <p className="glance__detail">{CEREMONY.area} · {CEREMONY.time}</p>
             </div>
 
             <span className="glance__divider" aria-hidden="true" />
 
             <div className="glance__item">
               <p className="glance__label">Reception</p>
-              <p className="glance__venue">Logos Ministries Gardens</p>
-              <p className="glance__detail">1:00 PM</p>
+              <p className="glance__venue">{RECEPTION.venue}</p>
+              <p className="glance__detail">{RECEPTION.time}</p>
             </div>
 
             <span className="glance__divider" aria-hidden="true" />
@@ -95,6 +105,10 @@ export default function Home() {
             </div>
 
           </div>
+
+          <p className="glance__cta">
+            <Link to="/details" className="glance__cta-link">Full schedule &amp; venue details →</Link>
+          </p>
         </div>
       </section>
 

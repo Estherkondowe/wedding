@@ -69,7 +69,7 @@
   left: 0;
   width: 0;
   height: 1px;
-  background-color: var(--color-champagne);
+  background-color: var(--color-champagne-ink);
   transition: width var(--transition-slow);
 }
 
@@ -86,28 +86,50 @@
   color: var(--color-brown);
 }
 
+/* RSVP — emphasized as the primary action */
+.navbar__link--cta {
+  color: var(--color-brown);
+  border: 1px solid var(--color-brown-light);
+  padding: var(--space-2) var(--space-5) calc(var(--space-2) - 1px);
+  transition: background-color var(--transition-base), color var(--transition-base),
+              border-color var(--transition-base);
+}
+
+.navbar__link--cta::after {
+  display: none;
+}
+
+.navbar__link--cta:hover,
+.navbar__link--cta.navbar__link--active {
+  background-color: var(--color-brown);
+  border-color: var(--color-brown);
+  color: var(--color-champagne-light);
+}
+
 /* --- Mobile toggle --- */
 .navbar__toggle {
   display: none;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
-  gap: 5px;
-  width: 28px;
-  height: 28px;
+  gap: 6px;
+  width: 44px;
+  height: 44px;
+  margin-right: calc(var(--space-3) * -1);
   padding: 0;
 }
 
 .navbar__toggle-bar {
   display: block;
-  width: 100%;
-  height: 1px;
+  width: 24px;
+  height: 1.5px;
   background-color: var(--color-brown);
   transform-origin: center;
   transition: transform var(--transition-base), opacity var(--transition-base);
 }
 
 .navbar__toggle--open .navbar__toggle-bar:nth-child(1) {
-  transform: translateY(6px) rotate(45deg);
+  transform: translateY(7.5px) rotate(45deg);
 }
 
 .navbar__toggle--open .navbar__toggle-bar:nth-child(2) {
@@ -115,25 +137,31 @@
 }
 
 .navbar__toggle--open .navbar__toggle-bar:nth-child(3) {
-  transform: translateY(-6px) rotate(-45deg);
+  transform: translateY(-7.5px) rotate(-45deg);
 }
 
-/* --- Mobile menu --- */
+/* --- Mobile menu ---
+   Closed state MUST have zero padding (border-box + padding > max-height:0
+   used to leave a permanent ~49px ghost strip over page content). */
 .navbar__mobile {
   display: none;
   flex-direction: column;
   background-color: var(--color-beige);
-  border-top: var(--border-thin);
-  padding: var(--space-6);
-  gap: var(--space-4);
+  padding: 0 var(--space-6);
   max-height: 0;
   overflow: hidden;
-  transition: max-height var(--transition-slow), padding var(--transition-slow);
+  visibility: hidden;
+  transition: max-height var(--transition-slow), padding var(--transition-slow),
+              visibility 0s linear var(--transition-slow);
 }
 
 .navbar__mobile--open {
-  max-height: 300px;
-  padding: var(--space-6);
+  max-height: 320px;
+  padding: var(--space-4) var(--space-6) var(--space-6);
+  border-top: var(--border-thin);
+  visibility: visible;
+  transition: max-height var(--transition-slow), padding var(--transition-slow),
+              visibility 0s;
 }
 
 .navbar__mobile-link {
@@ -144,8 +172,9 @@
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   color: var(--color-brown-mid);
-  padding: var(--space-3) 0;
+  padding: var(--space-4) 0;
   border-bottom: var(--border-thin);
+  min-height: 48px;
   transition: color var(--transition-base);
 }
 
