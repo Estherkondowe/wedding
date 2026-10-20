@@ -54,7 +54,7 @@ export default function RSVP() {
                   <span className="rsvp-contact__methods">
                     <a href={`tel:${phoneRaw}`} className="rsvp-contact__number">{phoneDisplay}</a>
                     <a
-                      href={waLink(phoneRaw, `Hello ${role}, regarding Mirriam & Elia's wedding on 7 November 2026…`)}
+                      href={waLink(phoneRaw, `Hello ${role}, regarding ${COUPLE.fullNames}'s wedding on 7 November 2026…`)}
                       className="rsvp-contact__wa"
                       target="_blank"
                       rel="noopener noreferrer"

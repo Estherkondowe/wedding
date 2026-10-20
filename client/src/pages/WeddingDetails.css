@@ -160,6 +160,17 @@
   color: var(--color-ink-light);
 }
 
+.timeline__note {
+  margin: var(--space-6) auto 0;
+  max-width: 34rem;
+  text-align: center;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--color-ink-light);
+}
+
 /* --- Notes --- */
 .details__notes-grid {
   display: grid;

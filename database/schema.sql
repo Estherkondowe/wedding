@@ -1,5 +1,5 @@
 -- =========================================================
--- WEDDING DATABASE SCHEMA — Mirriam & Elia
+-- WEDDING DATABASE SCHEMA — Elia & Mirriam
 -- Run this once against your Neon PostgreSQL instance.
 -- =========================================================
 

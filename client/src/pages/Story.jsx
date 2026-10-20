@@ -92,7 +92,7 @@ export default function Story() {
             />
             <Photo
               src={PHOTOS.couple}
-              alt="Mirriam and Elia smiling together"
+              alt={`${COUPLE.fullNames} smiling together`}
               aspectRatio="3 / 4"
             />
           </div>

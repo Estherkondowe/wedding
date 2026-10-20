@@ -3,7 +3,7 @@ import Divider from '../components/ui/Divider';
 import MapEmbed from '../components/ui/MapEmbed';
 import usePageTitle from '../hooks/usePageTitle';
 import {
-  CEREMONY, RECEPTION, SCHEDULE, PALETTE, DATE_LINE,
+  CEREMONY, RECEPTION, SCHEDULE, PALETTE, DATE_LINE, PROGRAM_NOTE,
   CEREMONY_START, CEREMONY_END, RECEPTION_START, RECEPTION_END,
 } from '../data/wedding';
 import './WeddingDetails.css';
@@ -59,17 +59,17 @@ function downloadIcs() {
   const lines = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//Mirriam and Elia//Wedding//EN',
+    'PRODID:-//Elia and Mirriam//Wedding//EN',
     'CALSCALE:GREGORIAN',
     'BEGIN:VEVENT',
-    'UID:ceremony-20261107@mirriamandelia',
+    'UID:ceremony-20261107@eliaandmirriam',
     `DTSTART:${toIcsDate(CEREMONY_START)}`,
     `DTEND:${toIcsDate(CEREMONY_END)}`,
     `SUMMARY:Wedding Ceremony — ${CEREMONY.venue}`,
     `LOCATION:${CEREMONY.venue}\\, ${CEREMONY.address}`,
     'END:VEVENT',
     'BEGIN:VEVENT',
-    'UID:reception-20261107@mirriamandelia',
+    'UID:reception-20261107@eliaandmirriam',
     `DTSTART:${toIcsDate(RECEPTION_START)}`,
     `DTEND:${toIcsDate(RECEPTION_END)}`,
     `SUMMARY:Wedding Reception — ${RECEPTION.venue}`,
@@ -81,7 +81,7 @@ function downloadIcs() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'mirriam-and-elia-wedding.ics';
+  a.download = 'elia-and-mirriam-wedding.ics';
   document.body.appendChild(a);
   a.click();
   a.remove();
@@ -136,6 +136,7 @@ export default function WeddingDetails() {
             subtitle="From the first amen to the last dance."
           />
           <ScheduleTimeline />
+          <p className="timeline__note">{PROGRAM_NOTE}</p>
         </div>
       </section>
 

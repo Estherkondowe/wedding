@@ -1,4 +1,4 @@
-# Mirriam & Elia — Wedding Website
+# Elia & Mirriam — Wedding Website
 
 **PERN Stack** · PostgreSQL · Express · React · Node.js
 

@@ -4,10 +4,10 @@
    ========================================================= */
 
 export const COUPLE = {
-  nameA: 'Mirriam',
-  nameB: 'Elia',
-  initials: 'M & E',
-  fullNames: 'Mirriam & Elia',
+  nameA: 'Elia',
+  nameB: 'Mirriam',
+  initials: 'E & M',
+  fullNames: 'Elia & Mirriam',
 };
 
 /* All times are Malawi (CAT, UTC+02:00). */
@@ -34,22 +34,22 @@ export const CEREMONY = {
 export const RECEPTION = {
   type: 'Reception',
   venue: 'Logos Ministries Gardens',
-  area: 'Area 49',
-  address: 'Logos Ministries Gardens, Area 49, Lilongwe',
+  area: 'Lilongwe',
+  address: 'Lilongwe',
   time: '1:00 PM',
   mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Logos+Ministries+Lilongwe',
   mapsEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d967.8541390166216!2d33.78255712847425!3d-13.993297197841523!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1921d3feb5636fbd%3A0x6e9ea65be49ee768!2sLogos%20Ministries!5e0!3m2!1sen!2smw!4v1792361404883!5m2!1sen!2smw',
 };
 
-/* Order of the day — EDIT these times to match the real program. */
+/* Order of the day — confirmed events only. When the full program is
+   announced, add entries here and clear PROGRAM_NOTE. */
 export const SCHEDULE = [
   { time: '8:00 AM',  title: 'Holy Matrimony',  detail: 'The ceremony begins at Bride Tabernacle. Please be seated by 7:45 AM.' },
-  { time: '11:00 AM', title: 'Congratulations',  detail: 'Photos and greetings with the couple after the service.' },
   { time: '1:00 PM',  title: 'Reception',        detail: 'Lunch and celebration begin at Logos Ministries Gardens.' },
-  { time: '2:30 PM',  title: 'Speeches & Toasts', detail: 'Family and friends share their wishes.' },
-  { time: '3:30 PM',  title: 'Cake Cutting',     detail: 'The sweet moment.' },
-  { time: '4:00 PM',  title: 'First Dance',      detail: 'Then the floor is open — dinner and dancing.' },
 ];
+
+export const PROGRAM_NOTE =
+  'The full program — speeches, cake, dancing — will be announced closer to the date. Check back here or watch your WhatsApp.';
 
 export const CONTACTS = [
   { role: 'Mr Chirwa',   phoneDisplay: '0995 979 684', phoneRaw: '+265995979684' },
