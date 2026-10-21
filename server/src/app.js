@@ -10,10 +10,20 @@ const app = express();
 /* --- Middleware --- */
 app.use(helmet());
 
+
+
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://eliawedsmirriam.vercel.app',
+];
+
 app.use(cors({
-  origin: process.env.CLIENT_ORIGIN || 'http://localhost:3000',
-  methods: ['GET', 'POST'],
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'x-admin-key'],
 }));
+
+
 
 app.use(express.json({ limit: '16kb' }));
 

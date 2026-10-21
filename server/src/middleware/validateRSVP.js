@@ -30,12 +30,24 @@ export default function validateRSVP(req, res, next) {
     });
   }
 
+  /* guest_count only needs to be 1–10 when the guest IS attending.
+     Declining guests send 0, which is valid and stored as-is. */
   const count = Number(guest_count);
-  if (!Number.isInteger(count) || count < 1 || count > 10) {
-    return res.status(400).json({
-      success: false,
-      error: 'guest_count must be a whole number between 1 and 10.',
-    });
+  if (attending) {
+    if (!Number.isInteger(count) || count < 1 || count > 10) {
+      return res.status(400).json({
+        success: false,
+        error: 'guest_count must be a whole number between 1 and 10.',
+      });
+    }
+  } else {
+    /* For declining guests, accept 0 or any valid count. */
+    if (!Number.isInteger(count) || count < 0 || count > 10) {
+      return res.status(400).json({
+        success: false,
+        error: 'guest_count must be a whole number between 0 and 10.',
+      });
+    }
   }
 
   if (email !== undefined && email !== null && email !== '') {

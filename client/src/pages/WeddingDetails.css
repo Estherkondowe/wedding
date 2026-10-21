@@ -7,8 +7,11 @@
   padding-bottom: var(--space-8);
 }
 
+/* On narrow screens the negative margin pulled the button into the heading.
+   Remove the negative margin entirely — the section already has enough
+   padding-bottom to separate the two. */
 .details__header-actions {
-  margin-top: calc(var(--space-10) * -1);
+  margin-top: var(--space-4);
   margin-bottom: var(--space-2);
 }
 
@@ -264,5 +267,16 @@
   .timeline__item {
     grid-template-columns: 1fr;
     gap: var(--space-2);
+  }
+}
+
+@media (max-width: 640px) {
+  /* Prevent the 80px label column from squeezing value text */
+  .event-card__meta-item {
+    grid-template-columns: 70px 1fr;
+  }
+
+  .details__notes-grid {
+    max-width: 100%;
   }
 }

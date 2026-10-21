@@ -7,6 +7,11 @@ const pool = new Pool({
   ssl: process.env.NODE_ENV === 'production'
     ? { rejectUnauthorized: false }
     : false,
+  /* Neon (serverless Postgres) benefits from a small pool and short idle
+     timeout so connections are not held open past the platform's idle limit. */
+  max: 5,
+  idleTimeoutMillis: 30_000,
+  connectionTimeoutMillis: 5_000,
 });
 
 /* Test connection on startup */

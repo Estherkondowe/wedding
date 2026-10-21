@@ -65,12 +65,14 @@ export default function Story() {
               </p>
             </div>
 
-            {/* Portrait image */}
+            {/* Portrait image — 720×1080 → 3:4.5, use 3/4 crop */}
             <div className="story__portrait">
               <Photo
                 src={PHOTOS.portrait}
                 alt={`${COUPLE.fullNames} in a quiet moment together`}
                 aspectRatio="3 / 4"
+                width={720}
+                height={960}
               />
             </div>
 
@@ -84,18 +86,21 @@ export default function Story() {
       <section className="section story__gallery">
         <div className="container--content" data-reveal>
           <p className="story__gallery-label">A few moments together</p>
-          <div className="story__photos">
-            <Photo
-              src={PHOTOS.engagement}
-              alt="The couple during their engagement"
-              aspectRatio="4 / 3"
-            />
-            <Photo
-              src={PHOTOS.couple}
-              alt={`${COUPLE.fullNames} smiling together`}
-              aspectRatio="3 / 4"
-            />
-          </div>
+          
+        <div className="story__photos">
+          <Photo
+            src={PHOTOS.engagement}
+            alt="The couple during their engagement"
+            aspectRatio="3 / 4"
+          />
+
+          <Photo
+            src={PHOTOS.couple}
+            alt={`${COUPLE.fullNames} smiling together`}
+            aspectRatio="3 / 4"
+          />
+        </div>
+
         </div>
       </section>
 

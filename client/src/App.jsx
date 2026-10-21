@@ -12,7 +12,7 @@ const Admin          = lazy(() => import('./pages/Admin'));
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <ErrorBoundary>
         <Layout>
           <Suspense fallback={<div className="section" aria-busy="true" />}>

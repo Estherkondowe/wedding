@@ -16,6 +16,8 @@ export default function Navbar() {
   const location = useLocation();
   const toggleRef = useRef(null);
   const wasOpen = useRef(false);
+  /* Track scroll position before locking so we can restore it */
+  const scrollY = useRef(0);
 
   /* Add a subtle border once user scrolls */
   useEffect(() => {
@@ -30,10 +32,30 @@ export default function Navbar() {
     setMenuOpen(false);
   }, [location]);
 
-  /* Lock body scroll while menu is open */
+  /* Lock body scroll while menu is open.
+     overflow:hidden alone does not prevent scroll on iOS Safari — we must
+     also use position:fixed and compensate with a negative top equal to the
+     current scroll offset, then restore it on close. */
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+    if (menuOpen) {
+      scrollY.current = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top      = `-${scrollY.current}px`;
+      document.body.style.width    = '100%';
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.position = '';
+      document.body.style.top      = '';
+      document.body.style.width    = '';
+      document.body.style.overflow = '';
+      if (scrollY.current) window.scrollTo(0, scrollY.current);
+    }
+    return () => {
+      document.body.style.position = '';
+      document.body.style.top      = '';
+      document.body.style.width    = '';
+      document.body.style.overflow = '';
+    };
   }, [menuOpen]);
 
   /* Escape closes the menu and returns focus to the toggle */
@@ -99,7 +121,7 @@ export default function Navbar() {
       <div
         id="mobile-menu"
         className={`navbar__mobile${menuOpen ? ' navbar__mobile--open' : ''}`}
-        aria-hidden={!menuOpen}
+       inert={!menuOpen ? '' : undefined}
       >
         <ul role="list">
           {NAV_LINKS.map(({ label, to }) => (
@@ -107,9 +129,7 @@ export default function Navbar() {
               <Link
                 to={to}
                 aria-current={isCurrent(to) ? 'page' : undefined}
-                className={`navbar__mobile-link${location.pathname === to ? ' navbar__mobile-link--active' : ''}`}
-                tabIndex={menuOpen ? 0 : -1}
-              >
+                className={`navbar__mobile-link${location.pathname === to ? ' navbar__mobile-link--active' : ''}`}>
                 {label}
               </Link>
             </li>

@@ -41,6 +41,7 @@
   text-align: center;
   gap: var(--space-6);
   max-width: 760px;
+  width: 100%;
   position: relative;
   z-index: 1;
 }
@@ -107,10 +108,15 @@
 .countdown {
   display: flex;
   align-items: center;
-  gap: var(--space-6);
-  padding: var(--space-5) var(--space-10);
+  /* Use clamp so gap shrinks gracefully on very narrow screens */
+  gap: clamp(var(--space-3), 3vw, var(--space-6));
+  /* Swap fixed side-padding for clamp: 0 at 320px, 40px at 480px+ */
+  padding: var(--space-5) clamp(var(--space-4), 6vw, var(--space-10));
   border-top: 1px solid rgba(237, 217, 170, 0.35);
   border-bottom: 1px solid rgba(237, 217, 170, 0.35);
+  width: 100%;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 .countdown__unit {
@@ -122,7 +128,7 @@
 
 .countdown__number {
   font-family: var(--font-serif);
-  font-size: var(--text-3xl);
+  font-size: clamp(var(--text-2xl), 7vw, var(--text-3xl));
   font-weight: var(--weight-light);
   color: var(--color-white);
   line-height: 1;
@@ -176,6 +182,7 @@
   flex-wrap: wrap;
   justify-content: center;
   margin-top: var(--space-2);
+  width: 100%;
 }
 
 /* --- At a Glance --- */
@@ -253,12 +260,9 @@
 
 /* --- Responsive --- */
 @media (max-width: 640px) {
-  .countdown {
-    gap: var(--space-4);
-    padding: var(--space-5) var(--space-6);
+  .hero {
+    padding: var(--space-16) var(--space-4);
   }
-
-  .countdown__number { font-size: var(--text-2xl); }
 
   .glance__divider {
     width: 40px;
@@ -270,11 +274,19 @@
     gap: var(--space-6);
   }
 
-  .hero__actions {
-    width: 100%;
-  }
-
   .hero__actions .btn {
     flex: 1 1 100%;
+  }
+}
+
+/* Extra-narrow screens (≤ 380px): hide separators to free room */
+@media (max-width: 380px) {
+  .countdown__sep {
+    display: none;
+  }
+
+  .countdown {
+    gap: clamp(var(--space-2), 2vw, var(--space-4));
+    padding: var(--space-4) var(--space-3);
   }
 }

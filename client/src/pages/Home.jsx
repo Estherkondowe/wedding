@@ -26,7 +26,7 @@ export default function Home() {
           className="hero__bg"
           src={PHOTOS.hero}
           alt={`${COUPLE.fullNames} together`}
-          fetchPriority="high"
+          fetchpriority="high"
           decoding="async"
         />
         <div className="hero__scrim" aria-hidden="true" />
@@ -78,7 +78,7 @@ export default function Home() {
       </section>
 
       {/* ── At a glance ─────────────────────── */}
-      <section className="glance section" aria-label="Event overview" data-reveal>
+      <section className="glance section" aria-label="Event overview" >
         <div className="container">
           <div className="glance__grid">
 
@@ -115,3 +115,4 @@ export default function Home() {
     </div>
   );
 }
+

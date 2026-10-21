@@ -11,23 +11,43 @@
     <meta property="og:url" content="https://eliaandmirriam.vercel.app" />
     <meta property="og:title" content="Elia &amp; Mirriam · 7 November 2026" />
     <meta property="og:description" content="With grateful hearts, we invite you to celebrate the beginning of our life together — Bride Tabernacle &amp; Logos Ministries Gardens, Lilongwe." />
-    <meta property="og:image" content="https://eliaandmirriam.vercel.app/og-image.jpg" />
+    <meta property="og:image" content="https://eliawedsmirriam.vercel.app/og-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Elia &amp; Mirriam · 7 November 2026" />
     <meta name="twitter:description" content="With grateful hearts, we invite you to celebrate the beginning of our life together." />
-    <meta name="twitter:image" content="https://eliaandmirriam.vercel.app/og-image.jpg" />
+    <meta name="twitter:image" content="https://eliawedsmirriam.vercel.app/og-image.jpg" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
+    <!-- Preload the hero image so it starts downloading before JS runs.
+         This is the LCP element on the home page. -->
+    <link
+      rel="preload"
+      as="image"
+      href="/photos/hero.jpg"
+      fetchpriority="high"
+    />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Non-render-blocking font load: load as print, then swap to all.
+         display=swap is already appended by Google; the media trick avoids
+         blocking the initial render entirely. -->
     <link
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap"
     />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap"
+      />
+    </noscript>
   </head>
   <body>
     <a href="#main-content" class="sr-only">Skip to main content</a>
